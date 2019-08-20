@@ -3,7 +3,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const config = {
-  entry: './src/index.js',
+  context: path.join(__dirname, 'src'),
+  entry: { main: './index.js' },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[hash].js'
@@ -53,7 +54,7 @@ const config = {
         ]
       },
       {
-        test: /\.png$/,
+        test: /\.(svg|png|jpe?g|gif)$/i,
         use: [
           {
             loader: 'url-loader',
@@ -64,19 +65,28 @@ const config = {
         ]
       },
       {
-        test: /\.svg$/,
+        test: /\.(svg|png|jpe?g|gif)$/i,
         use: 'file-loader'
       }
     ]
   },
   resolve: {
-    extensions: [
-      '.js',
-      '.jsx'
-    ]
+    extensions: ['.wasm', '.mjs', '.js', '.json', '.jsx', '.scss', '.css', '.jpg'],
+    alias: {
+      '@': path.join(__dirname, 'src'),
+    },
   },
   devServer: {
-    contentBase: './dist'
+    contentBase: path.join(__dirname, 'dist'),
+    watchContentBase: true,
+    // デフォルトでtrue
+    // inline: false
+    historyApiFallback: true,
+    hot: true,
+    // サーバー起動時に自動でブラウザを開く
+    open: true,
+    // openPage: ファイル名 // ファイルを指定して開ける
+    port: 3000,
   },
   plugins: [
     new HtmlWebpackPlugin({
