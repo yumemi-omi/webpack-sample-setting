@@ -6,7 +6,7 @@ const App = (props) => {
     return (
       <div>
         <img src={moomin} alt="あいう" />
-        Hello {props.name}!
+        Hello {props.name}!!!!
         <img src={img} alt="えお" />
       </div>
     );
